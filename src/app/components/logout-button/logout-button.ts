@@ -7,13 +7,13 @@ import { AuthService } from '@auth0/auth0-angular';
   template: `
     <button
       (click)="logout()"
-      class="button logout"
+      class="button logout cursor-pointer"
     >
       Log Out
     </button>
   `
 })
-export class LogoutButtonComponent {
+export class LogoutButton {
   private auth = inject(AuthService);
 
   logout(): void {

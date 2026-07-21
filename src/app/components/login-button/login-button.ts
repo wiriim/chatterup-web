@@ -13,7 +13,7 @@ import { AuthService } from '@auth0/auth0-angular';
     </button>
   `,
 })
-export class LoginButtonComponent {
+export class LoginButton {
   private auth = inject(AuthService);
 
   loginWithRedirect(): void {
