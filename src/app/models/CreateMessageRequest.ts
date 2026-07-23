@@ -1,5 +1,5 @@
 export type CreateMessageRequest = {
     content: string;
-    userId: number;
-    chatId: number;
+    userId: number | string;
+    chatId: number | string;
 }

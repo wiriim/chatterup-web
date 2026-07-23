@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
     }
     
     @if ((auth.isAuthenticated$ | async) && (auth.user$ | async); as user) {
-      <div class="flex items-center gap-2 mt-10">
+      <div class="flex flex-col items-center gap-2 mt-10">
         @if (user.picture) {
           <img 
             [src]="user.picture" 

@@ -1,23 +1,36 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { UserService } from '../../services/userService';
-import { catchError } from 'rxjs';
-import { StompService } from '../../services/stomp-service';
-import { CreateMessageRequest } from '../../models/CreateMessageRequest';
+import { catchError, Subscription, switchMap } from 'rxjs';
+import { StompService } from '../../services/stompService';
+import { Chat } from '../../models/Chat';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChatBox } from '../../components/chat-box/chat-box';
+import { ChatResponse } from '../../models/ChatResponse';
 
 @Component({
   selector: 'app-chats',
-  imports: [],
+  imports: [RouterLink, ChatBox],
   templateUrl: './chats.html',
-  styleUrl: './chats.css',
 })
-export class Chats implements OnInit {
+export class Chats implements OnInit, OnDestroy {
   userService = inject(UserService);
   stompService = inject(StompService);
-  userId = signal<number>(this.userService.currentUser()?.id || 0);
-  chatId = signal<number>(1);
-  content = signal<string>('');
+  activatedRoute = inject(ActivatedRoute);
+  userChats = signal<Chat[] | null>(null);
+  chatId = signal<string>('');
+
+  chatSubscription?: Subscription;
+  newChat = signal<ChatResponse | null>(null);
+
+  constructor() {
+    this.activatedRoute.params.subscribe((params) => {
+      this.chatId.set(params['id']);
+    });
+  }
 
   ngOnInit(): void {
+    //get or create current user
+    //then get current user's chats
     this.userService
       .getOrCreateCurrentUser()
       .pipe(
@@ -25,35 +38,33 @@ export class Chats implements OnInit {
           console.error(err);
           throw err;
         }),
-      )
-      .subscribe((user) => {
-        this.userService.currentUser.set(user);
-        console.log(this.userService.currentUser());
 
-        return this.userService.getUsers();
+        switchMap((user) => {
+          this.userService.currentUser.set(user);
+
+          this.stompService.connect();
+          this.chatSubscription = this.stompService.chats$.subscribe((chat) => {
+            this.newChat.set(chat);
+          });
+
+          return this.userService.getUserChats().pipe(
+            catchError((err) => {
+              console.error(err);
+              throw err;
+            }),
+          );
+        }),
+      )
+      .subscribe((chats) => {
+        this.userChats.set(chats);
       });
   }
 
-  connect(){
-    this.stompService.connect();
+  ngOnDestroy(): void {
+    this.chatSubscription?.unsubscribe();
   }
 
-  disconnect(){
+  disconnect() {
     this.stompService.disconnect();
-  }
-
-  sendMessage() {
-    const message: CreateMessageRequest = {
-      userId: this.userId(),
-      chatId: this.chatId(),
-      content: this.content(),
-    };
-    
-    this.stompService.send(message);
-  }
-
-  updateContent(event: KeyboardEvent){
-    const text = (event.target as HTMLInputElement).value;
-    this.content.set(text);
   }
 }

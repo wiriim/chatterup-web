@@ -1,19 +1,21 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { UserService } from '../../services/userService';
 import { User } from '../../models/User';
 import { catchError, switchMap } from 'rxjs';
+import { CreateChat } from '../../components/create-chat/create-chat';
 
 @Component({
   selector: 'app-users',
-  imports: [],
+  imports: [CreateChat],
   templateUrl: './users.html',
-  styleUrl: './users.css',
 })
 export class Users implements OnInit {
   userService = inject(UserService);
   users = signal<User[]>([]);
   filteredUsers = signal<User[]>([]);
   query = signal<string>('');
+  createChat = signal<boolean>(false);
+  addUser = signal<User | null>(null);
 
   ngOnInit(): void {
     //get or create current user
@@ -27,7 +29,6 @@ export class Users implements OnInit {
 
         switchMap((user) => {
           this.userService.currentUser.set(user);
-          console.log(this.userService.currentUser());
           
           return this.userService.getUsers();
         }),
@@ -51,5 +52,10 @@ export class Users implements OnInit {
         user.username.toLowerCase().includes(this.query().toLowerCase()),
       ),
     );
+  }
+
+  toggleCreateChat(user: User | null){
+    this.createChat.set(!this.createChat());
+    this.addUser.set(user);
   }
 }

@@ -1,25 +1,42 @@
+<div class="p-5">
+  <div>
+    <input
+      (keyup)="search($event)"
+      type="text"
+      placeholder="Username..."
+      class="border rounded-2xl p-5"
+    />
+  </div>
 
-<div>
-  <input (keyup)="search($event)" type="text" placeholder="Username..." class="border rounded-2xl p-5">
-</div>
+  <div class="flex flex-wrap gap-10 mt-10">
+    @if (query()) {
+      @for (user of filteredUsers(); track user.id) {
+        <div class="flex items-center gap-4 border p-5 rounded-2xl">
+          <img src="{{ user.picture }}" alt="" class="w-10 h-10 rounded-full" />
+          <p>{{ user.username }}</p>
+          <button class="cursor-pointer hover:underline" (click)="toggleCreateChat(user)">
+            Add
+          </button>
+        </div>
+      }
+    } @else {
+      @for (user of users(); track user.id) {
+        <div class="flex items-center gap-4 border p-5 rounded-2xl">
+          <img src="{{ user.picture }}" alt="" class="w-10 h-10 rounded-full" />
+          <p>{{ user.username }}</p>
+          <button class="cursor-pointer hover:underline" (click)="toggleCreateChat(user)">
+            Add
+          </button>
+        </div>
+      }
+    }
 
-<div class="flex flex-wrap gap-10 mt-10">
-  @if (query()) {
-    @for (user of filteredUsers(); track user.id) {
-      <div class="flex items-center gap-4 border p-5 rounded-2xl">
-        <img src="{{ user.picture }}" alt="" class="w-10 h-10 rounded-full" />
-        <p>{{ user.username }}</p>
-        <button class="cursor-pointer hover:underline">Add</button>
-      </div>
+    @if (this.createChat()) {
+      <app-create-chat
+        [currentUser]="this.userService.currentUser()"
+        [addUser]="addUser()"
+        (onCancel)="toggleCreateChat($event)"
+      />
     }
-  }
-  @else {
-    @for (user of users(); track user.id) {
-      <div class="flex items-center gap-4 border p-5 rounded-2xl">
-        <img src="{{ user.picture }}" alt="" class="w-10 h-10 rounded-full" />
-        <p>{{ user.username }}</p>
-        <button class="cursor-pointer hover:underline">Add</button>
-      </div>
-    }
-  }
+  </div>
 </div>

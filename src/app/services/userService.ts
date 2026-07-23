@@ -3,12 +3,13 @@ import { inject, Injectable, signal } from '@angular/core';
 import { User } from '../models/User';
 import { AuthService } from '@auth0/auth0-angular';
 import { switchMap } from 'rxjs';
+import { Chat } from '../models/Chat';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
   protected auth = inject(AuthService);
   currentUser = signal<User | null>(null);
 
@@ -31,5 +32,10 @@ export class UserService {
   getUsers() {
     const url = 'http://localhost:8080/users';
     return this.http.get<User[]>(url);
+  }
+
+  getUserChats(){
+    const url = `http://localhost:8080/users/${this.currentUser()?.username}/chats`;
+    return this.http.get<Chat[]>(url);
   }
 }

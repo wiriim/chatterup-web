@@ -1,8 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { RxStomp } from '@stomp/rx-stomp';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { UserService } from './userService';
 import { CreateMessageRequest } from '../models/CreateMessageRequest';
+import { Chat } from '../models/Chat';
+import { ChatResponse } from '../models/ChatResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +13,14 @@ export class StompService {
   rxStomp = new RxStomp();
   subscription = new Subscription();
   userService = inject(UserService);
+  private chatsSubject = new Subject<ChatResponse>();
+  chats$ = this.chatsSubject.asObservable();
 
   connect() {
+    if (this.rxStomp.active) {
+      return;
+    }
+    
     this.rxStomp.configure({
       brokerURL: 'ws://localhost:8080/ws',
     });
@@ -20,10 +28,8 @@ export class StompService {
     this.rxStomp.activate();
 
     this.subscription = this.rxStomp
-        .watch({ destination: `/chat/${this.userService.currentUser()?.id}` })
-        .subscribe((message) => console.log(`Message received: ${message.body}`));
-      console.log('Connected to ws://localhost:8080/ws');
-      console.log(`watching /chat/${this.userService.currentUser()?.id}`);
+      .watch({ destination: `/chat/${this.userService.currentUser()?.id}` })
+      .subscribe((chat) => this.chatsSubject.next(JSON.parse(chat.body)));
   }
 
   send(message: CreateMessageRequest) {
@@ -36,6 +42,5 @@ export class StompService {
   async disconnect() {
     this.subscription.unsubscribe();
     await this.rxStomp.deactivate();
-    console.log('Disconnected');
   }
 }

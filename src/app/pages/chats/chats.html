@@ -1,23 +1,24 @@
-<p>chats works!</p>
-
-<p>
-  <label for="userId">UserId</label>
-  <input type="text" id="userId" value="{{ this.userService.currentUser()?.id }}" readonly class="border p-2 ms-2 rounded-sm"/>
-</p>
-
-<p>
-  <label for="chatId">ChatId</label>
-  <input type="text" id="chatId" value="1" readonly class="border p-2 ms-2 rounded-sm"/>
-</p>
-
-<p>
-  <label for="content">Content</label>
-  <input (keyup)="updateContent($event)" type="text" id="content" value="" class="border p-2 ms-2 rounded-sm"/>
-</p>
-<p>
-    <button (click)="sendMessage()" class="cursor-pointer border rounded-2xl p-3">Publish</button>
-</p>
-<p>
-    <button (click)="connect()" class="cursor-pointer border rounded-2xl p-3">Connect</button>
-    <button (click)="disconnect()" class="cursor-pointer border rounded-2xl p-3">Disconnect</button>
-</p>
+<div class="flex">
+  <div class="flex flex-col w-1/4 border h-screen overflow-auto">
+    @for (chat of this.userChats(); track chat.id) {
+      <a
+        routerLink="/chats/{{ chat.id }}"
+        class="min-h-30 p-3 flex flex-col cursor-pointer border-b bg-[#2c2c2c] hover:bg-[#222]"
+        [class]="chat.id.toString() == this.chatId() ? 'bg-[#222]' : 'bg-[#333]'"
+      >
+        <p class="text-2xl">{{ chat.name }}</p>
+        <div class="flex gap-2 mt-1 items-center flex-wrap">
+          @for (user of chat.users; track user.id) {
+            <img src="{{ user.picture }}" alt="" class="w-4 h-4 rounded-full" />
+            <p class="text-sm">
+              {{ user.username }}
+            </p>
+          }
+        </div>
+      </a>
+    }
+  </div>
+  <div class="w-3/4 h-screen bg-[#222]">
+    <app-chat-box />
+  </div>
+</div>

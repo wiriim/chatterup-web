@@ -16,7 +16,7 @@
     @if (auth.isAuthenticated$ | async) {
       <div class="logged-in-section min-w-screen h-screen flex">
         <app-navbar />
-        <main class="p-10">
+        <main class="w-full">
           <router-outlet />
         </main>
       </div>

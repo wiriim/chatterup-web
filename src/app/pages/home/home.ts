@@ -10,7 +10,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-home',
   imports: [CommonModule, LoginButton, Navbar, RouterOutlet],
   templateUrl: './home.html',
-  styleUrl: './home.css',
 })
 export class Home {
   protected auth = inject(AuthService);

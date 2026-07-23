@@ -1,0 +1,84 @@
+<div class="p-5 h-full flex flex-col">
+  @if (this.chatId()) {
+    <div class="messages border rounded h-9/10 p-3 overflow-auto">
+      @for (message of this.messages(); track message.id) {
+        <div class="mb-4">
+          <div
+            class="flex gap-2"
+            [class]="message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''"
+          >
+            <img
+              src="{{ message.user.picture }}"
+              alt=""
+              class="w-5 h-5 rounded-full"
+              [class]="message.user.id == this.userService.currentUser()?.id ? 'hidden' : ''"
+            />
+            <p class="text-sm">{{ message.user.username }}</p>
+            <img
+              src="{{ message.user.picture }}"
+              alt=""
+              class="w-5 h-5 rounded-full"
+              [class]="message.user.id == this.userService.currentUser()?.id ? '' : 'hidden'"
+            />
+          </div>
+          <p
+            class="border p-2 rounded w-fit mt-4"
+            [class]="message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''"
+          >
+            {{ message.content }}
+          </p>
+        </div>
+      }
+      @for (newChat of this.newChat(); track newChat.message.id) {
+        @if (
+          newChat.id.toString() == this.chatId() &&
+          this.messages()?.every((message) => newChat.message.id != message.id)
+        ) {
+          <div class="mb-4">
+            <div
+              class="flex gap-2"
+              [class]="
+                newChat.message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''
+              "
+            >
+              <img
+                src="{{ newChat.message.user.picture }}"
+                alt=""
+                class="w-5 h-5 rounded-full"
+                [class]="
+                  newChat.message.user.id == this.userService.currentUser()?.id ? 'hidden' : ''
+                "
+              />
+              <p class="text-sm">{{ newChat.message.user.username }}</p>
+              <img
+                src="{{ newChat.message.user.picture }}"
+                alt=""
+                class="w-5 h-5 rounded-full"
+                [class]="
+                  newChat.message.user.id == this.userService.currentUser()?.id ? '' : 'hidden'
+                "
+              />
+            </div>
+            <p
+              class="border p-2 rounded w-fit mt-4"
+              [class]="
+                newChat.message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''
+              "
+            >
+              {{ newChat.message.content }}
+            </p>
+          </div>
+          {{ scrollToBottom() }}
+        }
+      }
+    </div>
+    <form class="flex justify-center items-center h-1/10 gap-2 mt-2">
+      <input type="text" class="border rounded p-2 w-4/5" [(ngModel)]="content" name="content"/>
+      <button class="border rounded p-2 cursor-pointer" (click)="sendMessage(); $event.preventDefault()">Send</button>
+    </form>
+  } @else {
+    <div class="flex justify-center items-center h-full">
+      <h1>Open one of your chats to start messaging</h1>
+    </div>
+  }
+</div>
