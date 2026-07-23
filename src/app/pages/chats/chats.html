@@ -1,0 +1,23 @@
+<p>chats works!</p>
+
+<p>
+  <label for="userId">UserId</label>
+  <input type="text" id="userId" value="{{ this.userService.currentUser()?.id }}" readonly class="border p-2 ms-2 rounded-sm"/>
+</p>
+
+<p>
+  <label for="chatId">ChatId</label>
+  <input type="text" id="chatId" value="1" readonly class="border p-2 ms-2 rounded-sm"/>
+</p>
+
+<p>
+  <label for="content">Content</label>
+  <input (keyup)="updateContent($event)" type="text" id="content" value="" class="border p-2 ms-2 rounded-sm"/>
+</p>
+<p>
+    <button (click)="sendMessage()" class="cursor-pointer border rounded-2xl p-3">Publish</button>
+</p>
+<p>
+    <button (click)="connect()" class="cursor-pointer border rounded-2xl p-3">Connect</button>
+    <button (click)="disconnect()" class="cursor-pointer border rounded-2xl p-3">Disconnect</button>
+</p>

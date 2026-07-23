@@ -1,9 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Profile } from '../components/profile/profile';
-import { LoginButton } from '../components/login-button/login-button';
+import { Profile } from '../../components/profile/profile';
+import { LoginButton } from '../../components/login-button/login-button';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '@auth0/auth0-angular';
-import { Navbar } from '../components/navbar/navbar';
+import { Navbar } from '../../components/navbar/navbar';
 import { RouterOutlet } from '@angular/router';
 
 @Component({

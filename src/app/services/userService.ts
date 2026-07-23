@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { inject, Injectable, signal } from '@angular/core';
+import { User } from '../models/User';
 import { AuthService } from '@auth0/auth0-angular';
-import { catchError, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +10,7 @@ import { catchError, switchMap } from 'rxjs';
 export class UserService {
   http = inject(HttpClient);
   protected auth = inject(AuthService);
+  currentUser = signal<User | null>(null);
 
   getOrCreateCurrentUser() {
     const url = 'http://localhost:8080/users';

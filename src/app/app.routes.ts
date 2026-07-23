@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { Users } from './users/users';
-import { Chats } from './chats/chats';
+import { Users } from './pages/users/users';
+import { Chats } from './pages/chats/chats';
 
 export const routes: Routes = [
   {
