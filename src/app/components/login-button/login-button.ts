@@ -7,7 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
   template: `
     <button
       (click)="loginWithRedirect()"
-      class="border rounded-xl px-5 py-1 cursor-pointer mt-5 hover:bg-white hover:text-black hover:border-white transition-bg duration-100"
+      class="border border-[#ffffff14] bg-[#ffffff0a] rounded-xl px-8 py-2 cursor-pointer mt-5 hover:bg-[#ffffff14] hover:border-[#ffffff2e] transition-bg duration-100"
     >
       Enter
     </button>

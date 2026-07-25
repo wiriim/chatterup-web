@@ -3,10 +3,11 @@ import { UserService } from '../../services/userService';
 import { User } from '../../models/User';
 import { catchError, switchMap } from 'rxjs';
 import { CreateChat } from '../../components/create-chat/create-chat';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-users',
-  imports: [CreateChat],
+  imports: [CreateChat, FormsModule],
   templateUrl: './users.html',
 })
 export class Users implements OnInit {
@@ -16,6 +17,7 @@ export class Users implements OnInit {
   query = signal<string>('');
   createChat = signal<boolean>(false);
   addUser = signal<User | null>(null);
+  svgColor = signal<string>("#555")
 
   ngOnInit(): void {
     //get or create current user

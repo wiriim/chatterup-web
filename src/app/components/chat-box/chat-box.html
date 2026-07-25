@@ -1,6 +1,6 @@
-<div class="p-5 h-full flex flex-col">
+<div class="h-full flex flex-col bg-[#22222260]">
   @if (this.chatId()) {
-    <div class="messages border rounded h-9/10 p-3 overflow-auto">
+    <div class="messages border-b border-[#f5f5f51a] rounded h-9/10 p-5 overflow-auto">
       @for (message of this.messages(); track message.id) {
         <div class="mb-4">
           <div
@@ -22,7 +22,7 @@
             />
           </div>
           <p
-            class="border p-2 rounded w-fit mt-4"
+            class="border border-[#868686aa] p-2 rounded w-fit mt-4"
             [class]="message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''"
           >
             {{ message.content }}
@@ -60,7 +60,7 @@
               />
             </div>
             <p
-              class="border p-2 rounded w-fit mt-4"
+              class="border border-[#868686aa] p-2 rounded w-fit mt-4"
               [class]="
                 newChat.message.user.id == this.userService.currentUser()?.id ? 'ms-auto w-fit' : ''
               "
@@ -73,8 +73,20 @@
       }
     </div>
     <form class="flex justify-center items-center h-1/10 gap-2 mt-2">
-      <input type="text" class="border rounded p-2 w-4/5" [(ngModel)]="content" name="content"/>
-      <button class="border rounded p-2 cursor-pointer" (click)="sendMessage(); $event.preventDefault()">Send</button>
+      <input
+        type="text"
+        class="border border-[#f5f5f51a] outline-none rounded p-2 w-4/5 focus:border-[#ffffff3f] autofill:bg-red-500!"
+        [(ngModel)]="content"
+        autocomplete="none"
+        placeholder="Type a message"
+        name="content"
+      />
+      <button
+        class="border border-[#f5f5f51a] rounded p-2 cursor-pointer hover:border-[#ffffff3f] hover:text-blue-300"
+        (click)="sendMessage(); $event.preventDefault()"
+      >
+        Send
+      </button>
     </form>
   } @else {
     <div class="flex justify-center items-center h-full">

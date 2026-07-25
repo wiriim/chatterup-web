@@ -12,31 +12,34 @@ import { FormsModule } from '@angular/forms';
     <div
       class="w-screen h-screen bg-[#222]/50 absolute top-0 left-0 flex justify-center items-center"
     >
-      <form class="border bg-[#333] rounded-2xl p-5 flex flex-col">
-        <h1>Create Chat with {{ addUser()?.username }} ?</h1>
+      <form class="border border-[#f5f5f51a] bg-[#1a1a1a] rounded-2xl p-5 flex flex-col">
+        <h1 class="text-2xl flex">Chat with&nbsp;<span class="max-w-50 text-nowrap overflow-hidden text-ellipsis">{{ addUser()?.username }}</span> ?</h1>
 
-        <p class="flex gap-2 items-center">
-          <label for="name">Chat Name: </label>
+        <div class="gap-2 items-center mt-5">
+          <div>
+            <label for="name">Name: </label>
+          </div>
           <input
             type="text"
             [(ngModel)]="name"
             name="name"
-            class="p-1 rounded border my-2"
+            class="rounded border border-[#f5f5f51a] my-2 outline-none p-2"
             required
             minlength="5"
+            placeholder="New Chat"
           />
-        </p>
+        </div>
 
-        <p class="mt-2">
+        <p class="mt-10">
           <button
-            class="mt-auto cursor-pointer w-fit border rounded p-1"
+            class="mt-auto cursor-pointer w-fit border border-[#f5f5f51a] rounded px-2.5 py-1 hover:text-red-300 hover:border-[#ffffff2e]"
             (click)="cancel(); $event.preventDefault()"
           >
             Cancel
           </button>
           <button
             type="submit"
-            class="mt-auto cursor-pointer w-fit border rounded p-1 ms-2"
+            class="mt-auto cursor-pointer w-fit border border-[#f5f5f51a] rounded px-2.5 py-1 ms-2 hover:text-green-300 hover:border-[#ffffff2e]"
             (click)="createChat(); $event.preventDefault()"
           >
             Create

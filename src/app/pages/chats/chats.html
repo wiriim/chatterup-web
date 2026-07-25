@@ -1,24 +1,27 @@
 <div class="flex">
-  <div class="flex flex-col w-1/4 border h-screen overflow-auto">
+  <div class="flex flex-col gap-2 w-1/4 p-2 border border-[#f5f5f51a] h-screen overflow-auto">
     @for (chat of this.userChats(); track chat.id) {
       <a
         routerLink="/chats/{{ chat.id }}"
-        class="min-h-30 p-3 flex flex-col cursor-pointer border-b bg-[#2c2c2c] hover:bg-[#222]"
-        [class]="chat.id.toString() == this.chatId() ? 'bg-[#222]' : 'bg-[#333]'"
+        class="min-h-30 p-3 flex flex-col justify-around cursor-pointer bg-[#080808] rounded text-[#fcfcfcd5] hover:text-white hover:bg-[#22222260]"
+        [class]="chat.id.toString() == this.chatId() ? 'bg-[#f5f5f51a] text-white' : ''"
       >
         <p class="text-2xl">{{ chat.name }}</p>
         <div class="flex gap-2 mt-1 items-center flex-wrap">
-          @for (user of chat.users; track user.id) {
+          @for (user of chat.users.slice(0, 5); track user.id) {
             <img src="{{ user.picture }}" alt="" class="w-4 h-4 rounded-full" />
             <p class="text-sm">
               {{ user.username }}
             </p>
           }
+          @if (chat.users.length > 5) {
+            <span>...</span>
+          }
         </div>
       </a>
     }
   </div>
-  <div class="w-3/4 h-screen bg-[#222]">
+  <div class="w-3/4 h-screen">
     <app-chat-box />
   </div>
 </div>

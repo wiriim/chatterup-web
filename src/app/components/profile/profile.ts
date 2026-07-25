@@ -10,26 +10,22 @@ import { CommonModule } from '@angular/common';
     @if (auth.isLoading$ | async) {
       <div class="loading-text">Loading profile...</div>
     }
-    
+
     @if ((auth.isAuthenticated$ | async) && (auth.user$ | async); as user) {
       <div class="flex flex-col items-center gap-2 mt-10">
         @if (user.picture) {
-          <img 
-            [src]="user.picture" 
+          <img
+            [src]="user.picture"
             [alt]="user.name || 'User'"
             class="profile-picture w-6 h-6 rounded-full"
           />
         }
-        <div style="text-align: center;">
-          <div 
-            class="profile-name text-base"
-          >
-            {{ user.nickname }}
-          </div>
+        <div class="profile-name text-base max-w-30 text-nowrap overflow-hidden text-ellipsis">
+          {{ user.nickname }}
         </div>
       </div>
     }
-  `
+  `,
 })
 export class Profile {
   protected auth = inject(AuthService);

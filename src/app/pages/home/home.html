@@ -16,17 +16,17 @@
     @if (auth.isAuthenticated$ | async) {
       <div class="logged-in-section min-w-screen h-screen flex">
         <app-navbar />
-        <main class="w-full">
+        <main class="w-full bg-[#080808]">
           <router-outlet />
         </main>
       </div>
     } @else {
-      <div
-        class="w-2/5 h-3/5 bg-[#555] rounded-2xl p-5 border flex flex-col items-center justify-center"
-      >
-        <h1 class="text-2xl font-semibold">Chatter Up</h1>
-        <p class="mt-1">Create new friends, and chat them up.</p>
-        <p>Be the one to start the chat.</p>
+      <div class="w-2/5 h-3/5 rounded-2xl p-5 flex flex-col">
+        <h1 class="text-8xl font-semibold">Chatter Up</h1>
+        <div class="text-[#ffffffa6] my-10">
+          <p>Create new friends, and chat them up.</p>
+          <p>Be the one to start the chat.</p>
+        </div>
         <app-login-button />
       </div>
     }
