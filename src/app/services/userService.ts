@@ -20,7 +20,7 @@ export class UserService {
         return this.http.post<User>(
           url,
           {
-            username: user?.nickname,
+            username: user!['username'] || user!.nickname,
             picture: user?.picture,
           },
           { headers: { 'Content-Type': 'application/json' } },

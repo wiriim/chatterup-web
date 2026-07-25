@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService, User } from '@auth0/auth0-angular';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
           />
         }
         <div class="profile-name text-base max-w-30 text-nowrap overflow-hidden text-ellipsis">
-          {{ user.nickname }}
+          {{ user['username'] || user.nickname }}
         </div>
       </div>
     }
