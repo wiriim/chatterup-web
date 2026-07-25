@@ -12,15 +12,21 @@ export class ChatService {
 
   createChat(request: CreateChatRequest) {
     const url = 'http://localhost:8080/chats';
-    
+
     return this.http.post<Chat>(url, request, {
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  getChatMessages(chatId: string){
-    const url =  `http://localhost:8080/chats/${chatId}/messages`;
+  getChatMessages(chatId: string) {
+    const url = `http://localhost:8080/chats/${chatId}/messages`;
 
     return this.http.get<Message[]>(url);
+  }
+
+  addUserToChat(chatId: number, userId: number) {
+    const url = `http://localhost:8080/chats/${chatId}/users/${userId}`;
+
+    return this.http.post<Chat>(url, {});
   }
 }
