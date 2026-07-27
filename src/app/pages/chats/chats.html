@@ -6,7 +6,15 @@
         class="min-h-30 p-3 flex flex-col justify-around cursor-pointer bg-[#080808] rounded text-[#fcfcfcd5] hover:text-white hover:bg-[#22222260]"
         [class]="chat.id.toString() == this.chatId() ? 'bg-[#f5f5f51a] text-white' : ''"
       >
-        <p class="text-2xl">{{ chat.name }}</p>
+        <div>
+          <p class="text-2xl">{{ chat.name }}</p>
+          <button
+            class="cursor-pointer text-green-300 text-start text-sm w-fit p-0.5 hover:text-green-500"
+            (click)="toggleViewMore(chat)"
+          >
+            Details
+          </button>
+        </div>
         <div class="flex gap-2 mt-1 items-center flex-wrap">
           @for (user of chat.users.slice(0, 5); track user.id) {
             <img src="{{ user.picture }}" alt="" class="w-4 h-4 rounded-full" />
@@ -15,10 +23,13 @@
             </p>
           }
           @if (chat.users.length > 5) {
-            <span>...</span>
+            <div class="text-sm text-[#f5f5f56b]">...and more</div>
           }
         </div>
       </a>
+      @if (this.viewMore()) {
+        <app-chat-detail [chat]="this.viewedChat()" (onBack)="toggleViewMore($event)" />
+      }
     }
   </div>
   <div class="w-3/4 h-screen">

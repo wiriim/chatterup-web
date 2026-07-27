@@ -121,7 +121,7 @@ import { UserService } from '../../services/userService';
               class="text-sm outline-none w-full"
             />
           </div>
-          <div class="h-full overflow-auto my-2 flex flex-col gap-2 scrollbar-none">
+          <div class="h-full overflow-auto my-2 flex flex-col gap-2 scrollbar-thin scrollbar-thumb-[#f5f5f51a]">
             @if (this.query()) {
               @for (chat of this.filteredChats(); track chat.id) {
                 <button

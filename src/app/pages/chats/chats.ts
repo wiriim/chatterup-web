@@ -6,10 +6,11 @@ import { Chat } from '../../models/Chat';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ChatBox } from '../../components/chat-box/chat-box';
 import { ChatResponse } from '../../models/ChatResponse';
+import { ChatDetail } from '../../components/chat-detail/chat-detail';
 
 @Component({
   selector: 'app-chats',
-  imports: [RouterLink, ChatBox],
+  imports: [RouterLink, ChatBox, ChatDetail],
   templateUrl: './chats.html',
 })
 export class Chats implements OnInit, OnDestroy {
@@ -18,6 +19,8 @@ export class Chats implements OnInit, OnDestroy {
   activatedRoute = inject(ActivatedRoute);
   userChats = signal<Chat[] | null>(null);
   chatId = signal<string>('');
+  viewMore = signal<boolean>(false);
+  viewedChat = signal<Chat | null>(null);
 
   chatSubscription?: Subscription;
   newChat = signal<ChatResponse | null>(null);
@@ -66,5 +69,10 @@ export class Chats implements OnInit, OnDestroy {
 
   disconnect() {
     this.stompService.disconnect();
+  }
+
+  toggleViewMore(chat: Chat | null) {
+    this.viewMore.set(!this.viewMore());
+    this.viewedChat.set(chat);
   }
 }
