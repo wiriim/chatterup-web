@@ -53,9 +53,7 @@ export class ChatBox implements OnInit {
 
   ngOnInit(): void {
     this.chatSubscription = this.stompService.chats$.subscribe((chat) => {
-      console.log(chat);
       this.newChat.update(prev => [...prev, chat]);
-      console.log(this.newChat());
     });
   }
 

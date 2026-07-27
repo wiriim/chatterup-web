@@ -7,7 +7,7 @@ import { AuthService } from '@auth0/auth0-angular';
   template: `
     <button
       (click)="logout()"
-      class="button logout cursor-pointer border border-[#f5f5f51a] rounded px-5 py-2.5 text-nowrap gap-2 hover:bg-[#ffffff14] hover:border-[#ffffff2e] flex items-center"
+      class="button logout cursor-pointer border border-[#f5f5f51a] rounded px-2.5 py-1 lg:px-5 lg:py-2.5 text-nowrap gap-2 hover:bg-[#ffffff14] hover:border-[#ffffff2e] flex items-center"
     >
       <span>Log Out</span>
       <div>

@@ -1,5 +1,5 @@
-<div class="flex">
-  <div class="flex flex-col gap-2 w-1/4 p-2 border border-[#f5f5f51a] h-screen overflow-auto">
+<div class="flex items-start h-full">
+  <div class="flex flex-col gap-2 w-2/5 lg:w-1/4 p-2 border border-[#f5f5f51a] max-h-full overflow-auto">
     @for (chat of this.userChats(); track chat.id) {
       <a
         routerLink="/chats/{{ chat.id }}"
@@ -7,7 +7,7 @@
         [class]="chat.id.toString() == this.chatId() ? 'bg-[#f5f5f51a] text-white' : ''"
       >
         <div>
-          <p class="text-2xl">{{ chat.name }}</p>
+          <p class="text-lg lg:text-2xl max-w-full truncate text-ellipsis overflow-hidden">{{ chat.name }}</p>
           <button
             class="cursor-pointer text-green-300 text-start text-sm w-fit p-0.5 hover:text-green-500"
             (click)="toggleViewMore(chat)"
@@ -15,15 +15,15 @@
             Details
           </button>
         </div>
-        <div class="flex gap-2 mt-1 items-center flex-wrap">
+        <div class="flex gap-2 mt-1 items-center flex-wrap overflow-hidden">
           @for (user of chat.users.slice(0, 5); track user.id) {
             <img src="{{ user.picture }}" alt="" class="w-4 h-4 rounded-full" />
-            <p class="text-sm">
+            <p class="text-xs xl:text-sm">
               {{ user.username }}
             </p>
           }
           @if (chat.users.length > 5) {
-            <div class="text-sm text-[#f5f5f56b]">...and more</div>
+            <div class="text-xs xl:text-sm text-[#f5f5f56b]">...and more</div>
           }
         </div>
       </a>
@@ -32,7 +32,7 @@
       }
     }
   </div>
-  <div class="w-3/4 h-screen">
+  <div class="w-3/4 h-full">
     <app-chat-box />
   </div>
 </div>

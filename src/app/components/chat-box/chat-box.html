@@ -1,6 +1,6 @@
 <div class="h-full flex flex-col bg-[#22222260]">
   @if (this.chatId()) {
-    <div class="messages border-b border-[#f5f5f51a] rounded h-9/10 p-5 overflow-auto">
+    <div class="messages border-b border-[#f5f5f51a] rounded h-9/10 p-5 overflow-auto scrollbar-thin scrollbar-thumb-[#f5f5f51a]">
       @for (message of this.messages(); track message.id) {
         <div class="mb-4">
           <div
