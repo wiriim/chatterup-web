@@ -4,6 +4,7 @@ import { User } from '../models/User';
 import { AuthService } from '@auth0/auth0-angular';
 import { switchMap } from 'rxjs';
 import { Chat } from '../models/Chat';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class UserService {
   currentUser = signal<User | null>(null);
 
   getOrCreateCurrentUser() {
-    const url = 'http://localhost:8080/users';
+    const url = `${environment.backend.fullUrl}/users`;
     return this.auth.user$.pipe(
       switchMap((user) => {
         return this.http.post<User>(
@@ -30,12 +31,12 @@ export class UserService {
   }
 
   getUsers() {
-    const url = 'http://localhost:8080/users';
+    const url = `${environment.backend.fullUrl}/users`;
     return this.http.get<User[]>(url);
   }
 
   getUserChats(){
-    const url = `http://localhost:8080/users/${this.currentUser()?.username}/chats`;
+    const url = `${environment.backend.fullUrl}/users/${this.currentUser()?.username}/chats`;
     return this.http.get<Chat[]>(url);
   }
 }

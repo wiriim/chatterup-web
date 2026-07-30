@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { CreateChatRequest } from '../models/CreateChatRequest';
 import { Chat } from '../models/Chat';
 import { Message } from '../models/Message';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ChatService {
   http = inject(HttpClient);
 
   createChat(request: CreateChatRequest) {
-    const url = 'http://localhost:8080/chats';
+    const url = `${environment.backend.fullUrl}/chats`;
 
     return this.http.post<Chat>(url, request, {
       headers: { 'Content-Type': 'application/json' },
@@ -19,13 +20,13 @@ export class ChatService {
   }
 
   getChatMessages(chatId: string) {
-    const url = `http://localhost:8080/chats/${chatId}/messages`;
+    const url = `${environment.backend.fullUrl}/chats/${chatId}/messages`;
 
     return this.http.get<Message[]>(url);
   }
 
   addUserToChat(chatId: number, userId: number) {
-    const url = `http://localhost:8080/chats/${chatId}/users/${userId}`;
+    const url = `${environment.backend.fullUrl}/chats/${chatId}/users/${userId}`;
 
     return this.http.post<Chat>(url, {});
   }

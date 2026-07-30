@@ -3,8 +3,8 @@ import { RxStomp } from '@stomp/rx-stomp';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from './userService';
 import { CreateMessageRequest } from '../models/CreateMessageRequest';
-import { Chat } from '../models/Chat';
 import { ChatResponse } from '../models/ChatResponse';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class StompService {
     }
     
     this.rxStomp.configure({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: `ws://${environment.backend.url}/ws`,
     });
 
     this.rxStomp.activate();
