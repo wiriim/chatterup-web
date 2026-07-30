@@ -24,6 +24,7 @@ playwright-report
 # ================================
 # Environment & log files
 # ================================
+/environments
 *.env*
 !*.env.production
 *.log
