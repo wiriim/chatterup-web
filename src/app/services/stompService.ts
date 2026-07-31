@@ -22,7 +22,7 @@ export class StompService {
     }
     
     this.rxStomp.configure({
-      brokerURL: `ws://${environment.backend.url}/ws`,
+      brokerURL: `wss://${environment.backend.url}/ws`,
     });
 
     this.rxStomp.activate();
