@@ -7,6 +7,6 @@ export const environment = {
   },
   backend: {
     fullUrl: '/api',
-    url: 'chatterup-up.win'
+    url: 'chatter-up.win'
   }
 };
