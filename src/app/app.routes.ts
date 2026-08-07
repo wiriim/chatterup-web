@@ -6,21 +6,21 @@ export const routes: Routes = [
   {
     path: '',
     component: Users,
-    title: 'Home Page',
+    title: 'Chatter Up: Create new friends, and chat them up.',
   },
   {
     path: 'users',
     component: Users,
-    title: 'Users Page',
+    title: 'Chatter Up: Create new friends, and chat them up.',
   },
   {
     path: 'chats',
     component: Chats,
-    title: 'Chats Page',
+    title: 'Chatter Up: Chat with friends.',
   },
   {
     path: 'chats/:id',
     component: Chats,
-    title: 'Chats Page',
+    title: 'Chatter Up: Chat with friends.',
   }
 ];
